@@ -164,18 +164,18 @@ check: check-core-purity lint test build
 
 # launch the built app in the foreground
 run: build
-    {{symroot}}/Debug/grounded.app/Contents/MacOS/grounded
+    {{symroot}}/Debug/Grounded.app/Contents/MacOS/Grounded
 
 # launch the built app detached (so the debug inspect server is reachable)
 dev: build
-    @pkill -x grounded 2>/dev/null || true
-    @{{symroot}}/Debug/grounded.app/Contents/MacOS/grounded &
+    @pkill -x Grounded 2>/dev/null || true
+    @{{symroot}}/Debug/Grounded.app/Contents/MacOS/Grounded &
     @sleep 1
-    @echo "grounded launched in background. Use 'just stop' to quit."
+    @echo "Grounded launched in background. Use 'just stop' to quit."
 
 # quit the running app gracefully
 stop:
-    @osascript -e 'tell application "grounded" to quit' 2>/dev/null || echo "grounded is not running"
+    @osascript -e 'tell application "Grounded" to quit' 2>/dev/null || echo "Grounded is not running"
 
 # install the git pre-commit hook that runs `just check` before every commit
 install-hooks:

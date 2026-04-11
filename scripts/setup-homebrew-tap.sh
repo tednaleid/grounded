@@ -5,8 +5,8 @@ set -euo pipefail
 
 OWNER="tednaleid"
 TAP_REPO="homebrew-grounded"
-MAIN_REPO="grounded"
-APP_NAME="grounded"
+MAIN_REPO="grounded"       # repo + cask + bundle-id segment (lowercase)
+APP_NAME="Grounded"        # macOS .app bundle display name (capitalized)
 
 # -- Preflight checks --
 
@@ -25,8 +25,8 @@ fi
 echo "Fetching latest release info..."
 VERSION=$(gh release view --repo "${OWNER}/${MAIN_REPO}" --json tagName -q .tagName)
 
-DMG_URL="https://github.com/${OWNER}/${MAIN_REPO}/releases/download/${VERSION}/${APP_NAME}-${VERSION}.dmg"
-echo "Downloading ${APP_NAME}-${VERSION}.dmg to compute SHA-256..."
+DMG_URL="https://github.com/${OWNER}/${MAIN_REPO}/releases/download/${VERSION}/${MAIN_REPO}-${VERSION}.dmg"
+echo "Downloading ${MAIN_REPO}-${VERSION}.dmg to compute SHA-256..."
 SHA256=$(curl -sL "$DMG_URL" | shasum -a 256 | awk '{print $1}')
 echo "  sha256: ${SHA256}"
 
@@ -54,12 +54,12 @@ fi
 
 mkdir -p Casks
 
-cat > "Casks/${APP_NAME}.rb" <<CASK
-cask "${APP_NAME}" do
+cat > "Casks/${MAIN_REPO}.rb" <<CASK
+cask "${MAIN_REPO}" do
   version "${VERSION}"
   sha256 "${SHA256}"
 
-  url "https://github.com/${OWNER}/${MAIN_REPO}/releases/download/#{version}/${APP_NAME}-#{version}.dmg"
+  url "https://github.com/${OWNER}/${MAIN_REPO}/releases/download/#{version}/${MAIN_REPO}-#{version}.dmg"
   name "${APP_NAME}"
   desc "macOS menubar app that monitors a home ChargePoint charger"
   homepage "https://github.com/${OWNER}/${MAIN_REPO}"
@@ -69,39 +69,39 @@ cask "${APP_NAME}" do
   app "${APP_NAME}.app"
 
   zap trash: [
-    "~/Library/Application Support/${APP_NAME}",
-    "~/Library/Preferences/com.${OWNER}.${APP_NAME}.plist",
-    "~/Library/Caches/com.${OWNER}.${APP_NAME}",
+    "~/Library/Application Support/${MAIN_REPO}",
+    "~/Library/Preferences/com.${OWNER}.${MAIN_REPO}.plist",
+    "~/Library/Caches/com.${OWNER}.${MAIN_REPO}",
   ]
 end
 CASK
 
 cat > README.md <<README
-# homebrew-${APP_NAME}
+# homebrew-${MAIN_REPO}
 
 Homebrew tap for [${APP_NAME}](https://github.com/${OWNER}/${MAIN_REPO}).
 
 ## Install
 
 \`\`\`bash
-brew install --cask ${OWNER}/${APP_NAME}/${APP_NAME}
+brew install --cask ${OWNER}/${MAIN_REPO}/${MAIN_REPO}
 \`\`\`
 
 Or:
 
 \`\`\`bash
-brew tap ${OWNER}/${APP_NAME}
-brew install --cask ${APP_NAME}
+brew tap ${OWNER}/${MAIN_REPO}
+brew install --cask ${MAIN_REPO}
 \`\`\`
 
 ## Update
 
 \`\`\`bash
-brew upgrade --cask ${APP_NAME}
+brew upgrade --cask ${MAIN_REPO}
 \`\`\`
 README
 
-git add "Casks/${APP_NAME}.rb" README.md
+git add "Casks/${MAIN_REPO}.rb" README.md
 git commit -m "Initial cask for ${APP_NAME} ${VERSION}"
 git push
 

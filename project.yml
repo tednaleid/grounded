@@ -30,7 +30,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.tednaleid.grounded
-        PRODUCT_NAME: grounded
+        PRODUCT_NAME: Grounded
         INFOPLIST_FILE: Resources/Info.plist
         CODE_SIGN_ENTITLEMENTS: Resources/grounded.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon

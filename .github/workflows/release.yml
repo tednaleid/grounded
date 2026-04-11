@@ -74,22 +74,22 @@ jobs:
             --options runtime \
             --entitlements Resources/grounded.entitlements \
             --timestamp \
-            /tmp/grounded-build/Release/grounded.app
+            /tmp/grounded-build/Release/Grounded.app
 
       - name: Ad-hoc sign (no certificate)
         if: env.APPLE_CERTIFICATE == ''
         run: |
           codesign --force --deep --sign - \
-            /tmp/grounded-build/Release/grounded.app
+            /tmp/grounded-build/Release/Grounded.app
 
       - name: Create DMG
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           DMG_DIR="/tmp/grounded-dmg"
           mkdir -p "$DMG_DIR"
-          cp -R /tmp/grounded-build/Release/grounded.app "$DMG_DIR/"
+          cp -R /tmp/grounded-build/Release/Grounded.app "$DMG_DIR/"
           ln -s /Applications "$DMG_DIR/Applications"
-          hdiutil create -volname "grounded" -srcfolder "$DMG_DIR" \
+          hdiutil create -volname "Grounded" -srcfolder "$DMG_DIR" \
             -ov -format UDZO "/tmp/grounded-build/grounded-${VERSION}.dmg"
 
       - name: Sign and notarize DMG
@@ -137,7 +137,7 @@ jobs:
 
             depends_on macos: ">= :sonoma"
 
-            app "grounded.app"
+            app "Grounded.app"
 
             zap trash: [
               "~/Library/Application Support/grounded",
