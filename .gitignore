@@ -1,5 +1,6 @@
 .llm
 /tmp/grounded-build
 .DS_Store
+grounded.xcodeproj/
 *.xcodeproj/xcuserdata/
 *.xcodeproj/project.xcworkspace/xcuserdata/
