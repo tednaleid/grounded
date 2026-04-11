@@ -30,23 +30,27 @@ echo "Downloading ${APP_NAME}-${VERSION}.dmg to compute SHA-256..."
 SHA256=$(curl -sL "$DMG_URL" | shasum -a 256 | awk '{print $1}')
 echo "  sha256: ${SHA256}"
 
-# -- Create the tap repo --
+# -- Create and clone the tap repo --
+
+# `gh repo clone` + `gh repo create` as separate steps hits a GraphQL
+# eventual-consistency race: REST-side create succeeds, but the GraphQL read
+# `gh repo clone` uses can't yet resolve the new repo and errors out. Use
+# `gh repo create --clone` which atomically creates and clones via the REST
+# response URL. SSH remote per `gh config get git_protocol`.
+WORKDIR=$(mktemp -d)
+trap 'rm -rf "$WORKDIR"' EXIT
+cd "$WORKDIR"
 
 if gh repo view "${OWNER}/${TAP_REPO}" &>/dev/null; then
-    echo "Repo ${OWNER}/${TAP_REPO} already exists, skipping creation."
+    echo "Repo ${OWNER}/${TAP_REPO} already exists, cloning."
+    git clone "git@github.com:${OWNER}/${TAP_REPO}.git" .
 else
     echo "Creating ${OWNER}/${TAP_REPO}..."
     gh repo create "${OWNER}/${TAP_REPO}" --public \
-        --description "Homebrew tap for ${APP_NAME}"
+        --description "Homebrew tap for ${APP_NAME}" \
+        --clone
+    cd "${TAP_REPO}"
 fi
-
-# -- Clone, populate, and push --
-
-WORKDIR=$(mktemp -d)
-trap 'rm -rf "$WORKDIR"' EXIT
-
-gh repo clone "${OWNER}/${TAP_REPO}" "$WORKDIR"
-cd "$WORKDIR"
 
 mkdir -p Casks
 
