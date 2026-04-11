@@ -131,7 +131,7 @@ jobs:
             sha256 "${SHA256}"
 
             url "https://github.com/tednaleid/grounded/releases/download/#{version}/grounded-#{version}.dmg"
-            name "grounded"
+            name "Grounded"
             desc "macOS menubar app that monitors a home ChargePoint charger"
             homepage "https://github.com/tednaleid/grounded"
 
