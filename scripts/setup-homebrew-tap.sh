@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+# ABOUTME: Creates the tednaleid/homebrew-grounded tap repo on GitHub and
+# ABOUTME: seeds it with an initial cask from the latest release. One-time setup.
+set -euo pipefail
+
+OWNER="tednaleid"
+TAP_REPO="homebrew-grounded"
+MAIN_REPO="grounded"
+APP_NAME="grounded"
+
+# -- Preflight checks --
+
+if ! command -v gh &>/dev/null; then
+    echo "Error: gh CLI is required. Install with: brew install gh"
+    exit 1
+fi
+
+if ! gh auth status &>/dev/null; then
+    echo "Error: not authenticated with gh. Run: gh auth login"
+    exit 1
+fi
+
+# -- Get latest release version and compute SHA-256 of the DMG --
+
+echo "Fetching latest release info..."
+VERSION=$(gh release view --repo "${OWNER}/${MAIN_REPO}" --json tagName -q .tagName)
+
+DMG_URL="https://github.com/${OWNER}/${MAIN_REPO}/releases/download/${VERSION}/${APP_NAME}-${VERSION}.dmg"
+echo "Downloading ${APP_NAME}-${VERSION}.dmg to compute SHA-256..."
+SHA256=$(curl -sL "$DMG_URL" | shasum -a 256 | awk '{print $1}')
+echo "  sha256: ${SHA256}"
+
+# -- Create the tap repo --
+
+if gh repo view "${OWNER}/${TAP_REPO}" &>/dev/null; then
+    echo "Repo ${OWNER}/${TAP_REPO} already exists, skipping creation."
+else
+    echo "Creating ${OWNER}/${TAP_REPO}..."
+    gh repo create "${OWNER}/${TAP_REPO}" --public \
+        --description "Homebrew tap for ${APP_NAME}"
+fi
+
+# -- Clone, populate, and push --
+
+WORKDIR=$(mktemp -d)
+trap 'rm -rf "$WORKDIR"' EXIT
+
+gh repo clone "${OWNER}/${TAP_REPO}" "$WORKDIR"
+cd "$WORKDIR"
+
+mkdir -p Casks
+
+cat > "Casks/${APP_NAME}.rb" <<CASK
+cask "${APP_NAME}" do
+  version "${VERSION}"
+  sha256 "${SHA256}"
+
+  url "https://github.com/${OWNER}/${MAIN_REPO}/releases/download/#{version}/${APP_NAME}-#{version}.dmg"
+  name "${APP_NAME}"
+  desc "macOS menubar app that monitors a home ChargePoint charger"
+  homepage "https://github.com/${OWNER}/${MAIN_REPO}"
+
+  depends_on macos: ">= :sonoma"
+
+  app "${APP_NAME}.app"
+
+  zap trash: [
+    "~/Library/Application Support/${APP_NAME}",
+    "~/Library/Preferences/com.${OWNER}.${APP_NAME}.plist",
+    "~/Library/Caches/com.${OWNER}.${APP_NAME}",
+  ]
+end
+CASK
+
+cat > README.md <<README
+# homebrew-${APP_NAME}
+
+Homebrew tap for [${APP_NAME}](https://github.com/${OWNER}/${MAIN_REPO}).
+
+## Install
+
+\`\`\`bash
+brew install --cask ${OWNER}/${APP_NAME}/${APP_NAME}
+\`\`\`
+
+Or:
+
+\`\`\`bash
+brew tap ${OWNER}/${APP_NAME}
+brew install --cask ${APP_NAME}
+\`\`\`
+
+## Update
+
+\`\`\`bash
+brew upgrade --cask ${APP_NAME}
+\`\`\`
+README
+
+git add "Casks/${APP_NAME}.rb" README.md
+git commit -m "Initial cask for ${APP_NAME} ${VERSION}"
+git push
+
+echo ""
+echo "Tap repo created and populated at: https://github.com/${OWNER}/${TAP_REPO}"
+echo ""
+echo "-- Next step: create a fine-grained Personal Access Token --"
+echo ""
+echo "1. Go to: https://github.com/settings/personal-access-tokens/new"
+echo "2. Token name: ${MAIN_REPO}-homebrew-tap"
+echo "3. Repository access: Only select repositories -> ${OWNER}/${TAP_REPO}"
+echo "4. Permissions: Contents -> Read and write"
+echo "5. Generate the token and copy it"
+echo ""
+echo "Then set it as a secret on the ${MAIN_REPO} repo:"
+echo ""
+echo "  gh secret set HOMEBREW_TAP_TOKEN --repo ${OWNER}/${MAIN_REPO}"
+echo ""
+echo "(Paste the token when prompted.)"
+echo ""
+echo "For signed, notarized releases you'll also want to set these secrets:"
+echo "  APPLE_CERTIFICATE           (base64-encoded .p12 developer ID certificate)"
+echo "  APPLE_CERTIFICATE_PASSWORD  (password for the .p12 file)"
+echo "  APPLE_ID                    (Apple ID email)"
+echo "  APPLE_TEAM_ID               (10-character Apple Developer Team ID)"
+echo "  APPLE_APP_SPECIFIC_PASSWORD (app-specific password for notarytool)"
+echo ""
+echo "Without these the release workflow still runs: it ad-hoc signs the app"
+echo "so development works, but the cask won't be installable for other users."

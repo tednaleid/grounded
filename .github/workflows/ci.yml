@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
+
+      - name: Install SwiftLint and xcodegen
+        run: brew install swiftlint xcodegen
+
+      - name: Check (core purity + lint + tests + build)
+        run: just check

@@ -1,0 +1,159 @@
+name: Release
+
+on:
+  push:
+    tags: ['[0-9]*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-26
+    env:
+      APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+      HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
+
+      - name: Install SwiftLint and xcodegen
+        run: brew install swiftlint xcodegen
+
+      - name: Generate and check
+        run: |
+          just generate
+          just check
+
+      - name: Build Release
+        run: |
+          xcodebuild -project grounded.xcodeproj -scheme grounded \
+            -configuration Release build SYMROOT=/tmp/grounded-build
+
+      - name: Extract version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      # -- Conditional code signing --
+      - name: Import certificate
+        if: env.APPLE_CERTIFICATE != ''
+        env:
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          echo "$APPLE_CERTIFICATE" | base64 --decode > /tmp/cert.p12
+          security create-keychain -p "" /tmp/build.keychain
+          security default-keychain -s /tmp/build.keychain
+          security unlock-keychain -p "" /tmp/build.keychain
+          security import /tmp/cert.p12 -k /tmp/build.keychain \
+            -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: \
+            -s -k "" /tmp/build.keychain
+
+      - name: Store notarization credentials
+        if: env.APPLE_CERTIFICATE != ''
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun notarytool store-credentials "grounded-notarize" \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_SPECIFIC_PASSWORD"
+
+      - name: Sign app
+        if: env.APPLE_CERTIFICATE != ''
+        run: |
+          codesign --force --deep --sign "Developer ID Application" \
+            --options runtime \
+            --entitlements Resources/grounded.entitlements \
+            --timestamp \
+            /tmp/grounded-build/Release/grounded.app
+
+      - name: Ad-hoc sign (no certificate)
+        if: env.APPLE_CERTIFICATE == ''
+        run: |
+          codesign --force --deep --sign - \
+            /tmp/grounded-build/Release/grounded.app
+
+      - name: Create DMG
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          DMG_DIR="/tmp/grounded-dmg"
+          mkdir -p "$DMG_DIR"
+          cp -R /tmp/grounded-build/Release/grounded.app "$DMG_DIR/"
+          ln -s /Applications "$DMG_DIR/Applications"
+          hdiutil create -volname "grounded" -srcfolder "$DMG_DIR" \
+            -ov -format UDZO "/tmp/grounded-build/grounded-${VERSION}.dmg"
+
+      - name: Sign and notarize DMG
+        if: env.APPLE_CERTIFICATE != ''
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          codesign --force --sign "Developer ID Application" \
+            --timestamp "/tmp/grounded-build/grounded-${VERSION}.dmg"
+          xcrun notarytool submit "/tmp/grounded-build/grounded-${VERSION}.dmg" \
+            --keychain-profile "grounded-notarize" --wait
+          xcrun stapler staple "/tmp/grounded-build/grounded-${VERSION}.dmg"
+
+      - name: Extract release notes
+        run: |
+          git fetch origin "refs/tags/${{ github.ref_name }}:refs/tags/${{ github.ref_name }}" --force
+          git tag -l --format='%(contents)' "${{ github.ref_name }}" | tail -n +2 > /tmp/release-notes.md
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: /tmp/release-notes.md
+          files: /tmp/grounded-build/grounded-${{ steps.version.outputs.version }}.dmg
+
+      # -- Homebrew cask update --
+      - name: Update Homebrew cask
+        if: env.HOMEBREW_TAP_TOKEN != ''
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          DMG_PATH="/tmp/grounded-build/grounded-${VERSION}.dmg"
+          SHA256=$(shasum -a 256 "$DMG_PATH" | awk '{print $1}')
+
+          git clone "https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/tednaleid/homebrew-grounded.git" /tmp/homebrew-grounded
+          cd /tmp/homebrew-grounded
+
+          mkdir -p Casks
+          cat > Casks/grounded.rb << CASK
+          cask "grounded" do
+            version "${VERSION}"
+            sha256 "${SHA256}"
+
+            url "https://github.com/tednaleid/grounded/releases/download/#{version}/grounded-#{version}.dmg"
+            name "grounded"
+            desc "macOS menubar app that monitors a home ChargePoint charger"
+            homepage "https://github.com/tednaleid/grounded"
+
+            depends_on macos: ">= :sonoma"
+
+            app "grounded.app"
+
+            zap trash: [
+              "~/Library/Application Support/grounded",
+              "~/Library/Preferences/com.tednaleid.grounded.plist",
+              "~/Library/Caches/com.tednaleid.grounded",
+            ]
+          end
+          CASK
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/grounded.rb
+          git diff --cached --quiet && echo "No cask changes" && exit 0
+          git commit -m "Update grounded to ${VERSION}"
+          git push
+
+      - name: Cleanup keychain
+        if: env.APPLE_CERTIFICATE != '' && always()
+        run: security delete-keychain /tmp/build.keychain 2>/dev/null || true

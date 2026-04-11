@@ -1,0 +1,19 @@
+excluded:
+  - grounded.xcodeproj
+  - DerivedData
+  - /tmp/grounded-build
+  - scripts
+
+identifier_name:
+  excluded:
+    - id
+    - up
+    - ok
+
+type_body_length:
+  warning: 450
+  error: 550
+
+file_length:
+  warning: 650
+  error: 750
