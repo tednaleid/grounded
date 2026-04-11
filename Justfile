@@ -18,6 +18,10 @@ default:
 generate:
     xcodegen generate
 
+# regenerate the AppIcon PNGs from bolt.car.circle via scripts/generate-icon.swift
+icon:
+    swift scripts/generate-icon.swift
+
 # build the app in Debug
 build: generate
     xcodebuild build \
