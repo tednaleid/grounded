@@ -86,6 +86,9 @@ targets:
       - path: Tests/IntegrationTests
         excludes:
           - "**/.gitkeep"
+      - path: Tests/CoreTests/Fakes
+        excludes:
+          - "**/.gitkeep"
       - path: Sources/Core
         excludes:
           - "**/.gitkeep"
