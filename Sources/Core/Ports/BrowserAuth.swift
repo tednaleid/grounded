@@ -8,6 +8,6 @@ import Foundation
 /// Marked `@MainActor` because WebKit can only be touched from the main
 /// thread. Main-actor isolation implies `Sendable`.
 @MainActor
-protocol BrowserAuth {
+protocol BrowserAuth: Sendable {
     func presentLogin() async throws -> Credentials
 }

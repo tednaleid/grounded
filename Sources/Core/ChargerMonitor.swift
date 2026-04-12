@@ -48,6 +48,16 @@ actor ChargerMonitor {
         await handle(result: result)
     }
 
+    /// Debug helper — inject `count` consecutive failures with the given
+    /// category directly into the state machine, bypassing the network.
+    /// Used by the inspect surface's `simulate-failure` endpoint to drive
+    /// the threshold machinery during hand-testing.
+    func injectFailures(_ category: APIErrorCategory, count: Int) async {
+        for _ in 0..<count {
+            await handle(result: .failure(category))
+        }
+    }
+
     /// Launch the background polling loop. First tick happens immediately,
     /// subsequent ticks wait `config.pollInterval` via the injected clock.
     /// Safe to call multiple times — idempotent.
