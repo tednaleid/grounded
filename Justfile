@@ -56,7 +56,7 @@ test-core filter="": generate
     fi
     xcodebuild test \
         -project "{{project}}" \
-        -scheme GroundedCoreTests \
+        -scheme {{scheme}} \
         -destination '{{destination}}' \
         -only-testing:"${target}" \
         SYMROOT="{{symroot}}"
@@ -71,7 +71,7 @@ test-adapters filter="": generate
     fi
     xcodebuild test \
         -project "{{project}}" \
-        -scheme GroundedAdapterTests \
+        -scheme {{scheme}} \
         -destination '{{destination}}' \
         -only-testing:"${target}" \
         SYMROOT="{{symroot}}"
@@ -86,7 +86,7 @@ test-integration filter="": generate
     fi
     xcodebuild test \
         -project "{{project}}" \
-        -scheme GroundedIntegrationTests \
+        -scheme {{scheme}} \
         -destination '{{destination}}' \
         -only-testing:"${target}" \
         SYMROOT="{{symroot}}"

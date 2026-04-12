@@ -9,6 +9,12 @@ identifier_name:
     - id
     - up
     - ok
+    - a
+    - b
+    - c
+    - to
+    - from
+    - t0
 
 type_body_length:
   warning: 450
