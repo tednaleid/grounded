@@ -14,4 +14,13 @@ struct Credentials: Sendable, Equatable, Codable {
     let region: String
     let userId: Int
     let chargerId: Int
+    /// `accountsEndpoint` from the discovery response — the profile
+    /// endpoint lives under this host.
+    let accountsEndpoint: String
+    /// `hcpoHcmEndpoint` from the discovery response — home charger
+    /// status lives under this host.
+    let hcpoHcmEndpoint: String
+    /// `mapcacheEndpoint` from the discovery response — user charging
+    /// status lives under this host.
+    let mapcacheEndpoint: String
 }

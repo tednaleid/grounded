@@ -41,7 +41,10 @@ struct ChargerMonitorTests {
             token: "abc",
             region: "NA-US",
             userId: 1,
-            chargerId: 13836601
+            chargerId: 13836601,
+            accountsEndpoint: "https://account.chargepoint.test/account/",
+            hcpoHcmEndpoint: "https://hcpo.chargepoint.test/",
+            mapcacheEndpoint: "https://mapcache.chargepoint.test/"
         )
     ) async -> TestEnvironment {
         let clock = ManualClock(t0: t0)

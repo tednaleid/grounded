@@ -65,6 +65,13 @@ targets:
       - path: Tests/AdapterTests
         excludes:
           - "**/.gitkeep"
+      - path: Tests/CoreTests/Fakes
+        excludes:
+          - "**/.gitkeep"
+      - path: Tests/Fixtures
+        buildPhase: resources
+        excludes:
+          - "**/.gitkeep"
       - path: Sources/Adapters
         excludes:
           - "**/.gitkeep"
