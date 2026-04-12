@@ -13,4 +13,10 @@ actor RecordingStateObserver: StateObserver {
     func stateDidChange(from previous: ChargerState, to current: ChargerState) async {
         observations.append(Observation(from: previous, to: current))
     }
+
+    private(set) var completedStates: [MonitorState] = []
+
+    func tickDidComplete(state: MonitorState) async {
+        completedStates.append(state)
+    }
 }

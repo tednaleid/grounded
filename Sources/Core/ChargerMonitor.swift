@@ -129,5 +129,9 @@ actor ChargerMonitor {
                 body: notification.body
             )
         }
+
+        for observer in observers {
+            await observer.tickDidComplete(state: state)
+        }
     }
 }

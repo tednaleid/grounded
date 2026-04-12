@@ -164,14 +164,18 @@ check: check-core-purity lint test build
 
 # launch the built app in the foreground
 run: build
-    {{symroot}}/Debug/Grounded.app/Contents/MacOS/Grounded
+    @mkdir -p ~/Applications
+    @rsync -a --delete {{symroot}}/Debug/Grounded.app ~/Applications/
+    ~/Applications/Grounded.app/Contents/MacOS/Grounded
 
 # launch the built app detached (so the debug inspect server is reachable)
 dev: build
     @pkill -x Grounded 2>/dev/null || true
-    @{{symroot}}/Debug/Grounded.app/Contents/MacOS/Grounded &
+    @mkdir -p ~/Applications
+    @rsync -a --delete {{symroot}}/Debug/Grounded.app ~/Applications/
+    @~/Applications/Grounded.app/Contents/MacOS/Grounded &
     @sleep 1
-    @echo "Grounded launched in background. Use 'just stop' to quit."
+    @echo "Grounded launched from ~/Applications. Use 'just stop' to quit."
 
 # quit the running app gracefully
 stop:

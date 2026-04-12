@@ -9,9 +9,10 @@ import Foundation
 /// polluting Core. Constructed by `AppDelegate` with the shared status
 /// item and menu actions already wired.
 @MainActor
-final class StatusItemController: StateObserver {
+final class StatusItemController: NSObject, StateObserver, NSMenuDelegate {
     private let statusItem: NSStatusItem
     private var currentMenuState: MenuState = .initial
+    private var latestMonitorState: MonitorState?
 
     /// Callbacks fired by menu items. Wired by `AppDelegate`.
     struct Actions: Sendable {
@@ -52,6 +53,7 @@ final class StatusItemController: StateObserver {
         self.statusItem = statusItem
         self.actions = actions
         self.relativeTimeFormatter = relativeTimeFormatter
+        super.init()
         applyIcon(for: .unknown)
         applyMenu()
     }
@@ -60,6 +62,19 @@ final class StatusItemController: StateObserver {
         await MainActor.run {
             self.applyIcon(for: current)
             self.applyMenu()
+        }
+    }
+
+    nonisolated func tickDidComplete(state: MonitorState) async {
+        await MainActor.run {
+            self.latestMonitorState = state
+            self.refreshMenu(from: state)
+        }
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+        if let state = latestMonitorState {
+            refreshMenu(from: state)
         }
     }
 
@@ -122,6 +137,7 @@ final class StatusItemController: StateObserver {
     private func applyMenu() {
         let menu = NSMenu()
         menu.autoenablesItems = false
+        menu.delegate = self
 
         let title = NSMenuItem(title: currentMenuState.statusTitle, action: nil, keyEquivalent: "")
         title.isEnabled = false

@@ -5,4 +5,5 @@ import Foundation
 /// real observers land in Phase 2.
 protocol StateObserver: Sendable {
     func stateDidChange(from previous: ChargerState, to current: ChargerState) async
+    func tickDidComplete(state: MonitorState) async
 }
