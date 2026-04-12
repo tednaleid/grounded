@@ -1,5 +1,6 @@
 import AppKit
 import Foundation
+import ServiceManagement
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -110,6 +111,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             let credentials = try await flow.signIn()
             try await credentialStore.save(credentials)
+            await monitor?.performTick()
         } catch {
             NSLog("grounded: login failed: \(error)")
         }
@@ -117,13 +119,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func signOut() async {
         try? await credentialStore.clear()
-        // The next tick will see missing credentials and transition to
-        // .signedOut via the auth fast-path. No need to restart the loop.
+        await monitor?.performTick()
     }
 
     // MARK: - Open at Login
 
     private func toggleOpenAtLogin() {
-        // Placeholder — F3 will flip the actual SMAppService registration.
+        let service = SMAppService.mainApp
+        do {
+            if service.status == .enabled {
+                try service.unregister()
+            } else {
+                try service.register()
+            }
+        } catch {
+            NSLog("grounded: open-at-login toggle failed: \(error)")
+        }
     }
 }

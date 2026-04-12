@@ -137,6 +137,10 @@ inspect-notify title body:
         -H 'Content-Type: application/json' \
         -d '{"title":"{{title}}","body":"{{body}}"}'
 
+# dump the raw ChargePoint API responses (charger status + user charging status)
+inspect-raw-api:
+    curl -sS {{inspect_base}}/raw-api | jq .
+
 # enforce Core purity: no UI/system framework imports under Sources/Core
 check-core-purity:
     #!/usr/bin/env bash

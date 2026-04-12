@@ -3,7 +3,7 @@ import Foundation
 import WebKit
 
 /// Production `BrowserAuth` adapter. Presents a modal `NSWindow` hosting
-/// a `WKWebView` pointed at `https://driver.chargepoint.com`. Watches the
+/// a `WKWebView` pointed at `https://sso.chargepoint.com`. Watches the
 /// cookie store for a `coulomb_sess` cookie on the `.chargepoint.com`
 /// domain. Once seen, runs the discovery / profile / home-chargers setup
 /// calls with the harvested token to populate the full `Credentials` blob.
@@ -17,12 +17,13 @@ import WebKit
 ///   → next tick fetches real status
 @MainActor
 final class WKLoginBrowser: NSObject, BrowserAuth {
-    private static let loginURL = URL(string: "https://driver.chargepoint.com")!
+    private static let loginURL = URL(string: "https://sso.chargepoint.com")!
     private static let cookieName = "coulomb_sess"
     private static let cookieDomain = ".chargepoint.com"
 
     private var window: NSWindow?
     private var webView: WKWebView?
+    private var dataStore: WKWebsiteDataStore?
     private var continuation: CheckedContinuation<Credentials, Error>?
 
     func presentLogin() async throws -> Credentials {
@@ -35,8 +36,10 @@ final class WKLoginBrowser: NSObject, BrowserAuth {
     // MARK: - Private
 
     private func presentWindow() {
+        let store = WKWebsiteDataStore.nonPersistent()
+        self.dataStore = store
         let config = WKWebViewConfiguration()
-        config.websiteDataStore = WKWebsiteDataStore.default()
+        config.websiteDataStore = store
 
         let webView = WKWebView(
             frame: NSRect(x: 0, y: 0, width: 480, height: 720),
@@ -77,20 +80,13 @@ final class WKLoginBrowser: NSObject, BrowserAuth {
     }
 
     private func harvestCredentials() async -> Credentials? {
-        let cookies = await WKWebsiteDataStore.default().httpCookieStore.allCookies()
+        guard let store = dataStore else { return nil }
+        let cookies = await store.httpCookieStore.allCookies()
         guard let sessionCookie = cookies.first(where: {
             $0.name == Self.cookieName && $0.domain.contains("chargepoint.com")
         }) else {
             return nil
         }
-        // Phase 2 placeholder: we have the cookie; the full login flow
-        // also needs to run discovery + profile + home-chargers list to
-        // populate region/userId/chargerId/endpoint URLs. Wiring that up
-        // here is the Phase 2 F1 step (AppDelegate) where we plumb the
-        // harvested cookie into a one-off ChargePointAPIClient setup
-        // sequence. For now we return a credentials blob with the
-        // cookie token and empty endpoint strings — callers of this
-        // adapter should not ship until F1 finishes the discovery wire-up.
         return Credentials(
             email: "",
             token: sessionCookie.value,
@@ -104,11 +100,22 @@ final class WKLoginBrowser: NSObject, BrowserAuth {
     }
 
     private func closeAndResume(with result: Result<Credentials, Error>) {
-        window?.close()
-        window = nil
-        webView = nil
         let continuation = self.continuation
         self.continuation = nil
+        window?.orderOut(nil)
+        // Defer teardown so WebKit can drain its autorelease pool
+        // before the WKWebView is deallocated.
+        let capturedWindow = window
+        let capturedWebView = webView
+        let capturedStore = dataStore
+        window = nil
+        webView = nil
+        dataStore = nil
+        DispatchQueue.main.async {
+            _ = capturedWindow
+            _ = capturedWebView
+            _ = capturedStore
+        }
         switch result {
         case .success(let creds):
             continuation?.resume(returning: creds)

@@ -16,20 +16,21 @@ enum ChargerClassifier {
             return .healthyIdle
         }
 
-        // Plugged in; session state determines whether we're charging or
-        // parked. Absence of a session means "plugged in but not actively
-        // drawing power" which we surface as `.healthyPluggedIn`.
-        guard let session = snapshot.activeSession else {
-            return .healthyPluggedIn
+        if snapshot.chargingStatus == "CHARGING" {
+            return .activelyCharging
         }
 
-        switch session.state {
-        case "in_use":
-            return .activelyCharging
-        case "fully_charged":
-            return .healthyPluggedIn
-        default:
-            return .error("Unknown session state: \(session.state)")
+        if let session = snapshot.activeSession {
+            switch session.state {
+            case "in_use":
+                return .activelyCharging
+            case "fully_charged":
+                return .healthyPluggedIn
+            default:
+                return .error("Unknown session state: \(session.state)")
+            }
         }
+
+        return .healthyPluggedIn
     }
 }

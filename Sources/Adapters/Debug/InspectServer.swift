@@ -104,6 +104,8 @@ final class InspectServer: @unchecked Sendable {
             return try await handleClassify(request: request)
         case ("POST", "/notify-test"):
             return try await handleNotifyTest(request: request, dependencies: dependencies)
+        case ("GET", "/raw-api"):
+            return try await handleRawAPI(dependencies: dependencies)
         case ("POST", "/simulate"), ("GET", "/history"):
             // Deferred — ship a 501 so clients see a clear message rather
             // than a 404 that looks like a path typo.
@@ -212,6 +214,58 @@ final class InspectServer: @unchecked Sendable {
         }
         await dependencies.notificationSink.deliver(title: title, body: text)
         return httpResponse(status: "200 OK", body: #"{"status":"delivered"}"#)
+    }
+
+    private static func handleRawAPI(dependencies: Dependencies) async throws -> Data {
+        guard let credentials = try await dependencies.credentialStore.load() else {
+            return httpResponse(status: "401 Unauthorized", body: #"{"error":"no credentials"}"#)
+        }
+
+        let hcpoBase = URL(string: credentials.hcpoHcmEndpoint)!
+        let chargerURL = URL(
+            string: "api/v1/configuration/users/\(credentials.userId)" +
+                "/chargers/\(credentials.chargerId)/status",
+            relativeTo: hcpoBase
+        )!.absoluteURL
+
+        let mapcacheURL = URL(
+            string: "v2",
+            relativeTo: URL(string: credentials.mapcacheEndpoint)
+        )!.absoluteURL
+
+        func fetch(url: URL, method: String, body: Data?) async -> (Int, String) {
+            var req = URLRequest(url: url)
+            req.httpMethod = method
+            req.httpBody = body
+            if body != nil {
+                req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            }
+            req.setValue("CP_SESSION_TOKEN", forHTTPHeaderField: "cp-session-type")
+            req.setValue(credentials.token, forHTTPHeaderField: "cp-session-token")
+            req.setValue(credentials.region, forHTTPHeaderField: "cp-region")
+            req.setValue("grounded/0.1", forHTTPHeaderField: "user-agent")
+            do {
+                let (data, response) = try await URLSession.shared.data(for: req)
+                let code = (response as? HTTPURLResponse)?.statusCode ?? 0
+                return (code, String(data: data, encoding: .utf8) ?? "<binary>")
+            } catch {
+                return (0, error.localizedDescription)
+            }
+        }
+
+        let (chargerCode, chargerBody) = await fetch(url: chargerURL, method: "GET", body: nil)
+        let userBody = Data(#"{"user_status": {"mfhs": {}}}"#.utf8)
+        let (userCode, userResponseBody) = await fetch(url: mapcacheURL, method: "POST", body: userBody)
+
+        let result: [String: Any] = [
+            "charger_status": ["code": chargerCode, "body": chargerBody],
+            "user_charging_status": ["code": userCode, "body": userResponseBody]
+        ]
+        guard let json = try? JSONSerialization.data(withJSONObject: result),
+              let body = String(data: json, encoding: .utf8) else {
+            return httpResponse(status: "500", body: #"{"error":"encode"}"#)
+        }
+        return httpResponse(status: "200 OK", body: body)
     }
 
     // MARK: - HTTP parsing + writing

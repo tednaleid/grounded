@@ -69,6 +69,26 @@ struct ChargerClassifierTests {
         #expect(state == .error("Charger offline"))
     }
 
+    @Test("plugged, chargingStatus=CHARGING, no session → activelyCharging")
+    func chargingStatusCharging() {
+        let state = ChargerClassifier.classify(
+            snapshot(plugged: true, chargingStatus: "CHARGING", session: nil)
+        )
+        #expect(state == .activelyCharging)
+    }
+
+    @Test("plugged, chargingStatus=CHARGING trumps session state fully_charged")
+    func chargingStatusTrumpsSession() {
+        let state = ChargerClassifier.classify(
+            snapshot(
+                plugged: true,
+                chargingStatus: "CHARGING",
+                session: ActiveSessionInfo(sessionId: 1, state: "fully_charged")
+            )
+        )
+        #expect(state == .activelyCharging)
+    }
+
     @Test("plugged, unknown session state → error with raw state in reason")
     func unknownSessionState() {
         let state = ChargerClassifier.classify(
