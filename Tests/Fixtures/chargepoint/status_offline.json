@@ -1,0 +1,17 @@
+{
+  "brand": "CP",
+  "isPluggedIn": false,
+  "isConnected": false,
+  "chargingStatus": "AVAILABLE",
+  "isReminderEnabled": false,
+  "plugInReminderTime": "0:00",
+  "model": "HOME FLEX",
+  "macAddress": "00:00:00:00:00:00",
+  "hasUtilityInfo": false,
+  "isDuringScheduledTime": false,
+  "chargeAmperageSettings": {
+    "chargeLimit": 28,
+    "inProgress": false,
+    "possibleChargeLimit": [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+  }
+}

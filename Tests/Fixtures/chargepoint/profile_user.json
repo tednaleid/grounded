@@ -1,0 +1,21 @@
+{
+  "user": {
+    "email": "test@pytest.com",
+    "evatarUrl": "https://pytest.com",
+    "familyName": "Test",
+    "fullName": "Test User",
+    "givenName": "Test",
+    "phone": "1234567890",
+    "phoneCountryId": 1,
+    "userId": 1,
+    "username": "test"
+  },
+  "accountBalance": {
+    "accountNumber": "1",
+    "accountState": "test",
+    "balance": {
+      "amount": "0.0",
+      "currency": "USD"
+    }
+  }
+}

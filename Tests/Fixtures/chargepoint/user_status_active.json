@@ -1,0 +1,17 @@
+{
+  "user_status": {
+    "charging": {
+      "sessionId": 1,
+      "state": "in_use",
+      "startTimeUTC": 1700000000,
+      "stations": [
+        {
+          "deviceId": 1,
+          "name": "CP HOME",
+          "lat": 30.0,
+          "lon": 70.0
+        }
+      ]
+    }
+  }
+}

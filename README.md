@@ -71,6 +71,14 @@ Authoritative design lives under
 - [`phase-2-spec.md`](docs/specs/2026-04-11-grounded-menubar-app/phase-2-spec.md) —
   TDD-first core + adapters + wire-up
 
+## Third-party notices
+
+The ChargePoint API test fixtures under `Tests/Fixtures/chargepoint/`
+are derived from
+[python-chargepoint](https://github.com/mbillow/python-chargepoint)
+(© 2022 Marc Billow, MIT). Full attribution is in
+[THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+
 ## License
 
 [MIT](LICENSE)

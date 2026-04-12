@@ -1,0 +1,1093 @@
+{
+    "endPoints": {
+        "accounts_endpoint": {
+            "value": "https://account.chargepoint.com/account/",
+            "dataDome": true
+        },
+        "ptr_api_endpoint": {
+            "value": "https://api.int.chargepoint.com/ext/",
+            "dataDome": true
+        },
+        "smart_car_integration_api_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/smart-car-integration/api/v1/",
+            "dataDome": true
+        },
+        "hcpo_hcm_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/hcpo-charger-management/",
+            "dataDome": true
+        },
+        "sso_endpoint": {
+            "value": "https://sso.chargepoint.com/api/",
+            "dataDome": true
+        },
+        "mapcache_endpoint": {
+            "value": "https://mc.chargepoint.com/map-prod/",
+            "dataDome": true
+        },
+        "websocket_endpoint": {
+            "value": "wss://publish.chargepoint.com:443/pub-prod/",
+            "dataDome": true
+        },
+        "payment_java_endpoint": {
+            "value": "https://payments.chargepoint.com/payment/",
+            "dataDome": true
+        },
+        "payment_php_endpoint": {
+            "value": "https://payment.chargepoint.com/",
+            "dataDome": true
+        },
+        "portal_subdomain": {
+            "value": "na",
+            "dataDome": true
+        },
+        "station_updates_live_endpoint": {
+            "value": "wss://internal-api-us.chargepoint.com/a/0/cposvc/station-live/v1/station-updates/live",
+            "dataDome": true
+        },
+        "kestrel_websocket_endpoint": {
+            "value": "wss://homecharger-cph50k-na.chargepoint.com:443/ws-prod/panda/v1",
+            "dataDome": true
+        },
+        "route_planning_api_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/route-planning/api/v1",
+            "dataDome": true
+        },
+        "chatbot_auth_session_token_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/ccaas-authenticator",
+            "dataDome": true
+        },
+        "hcpo_org_endpoints": {
+            "value": "https://internal-api-us.chargepoint.com/hcpo-org-management/",
+            "dataDome": true
+        },
+        "installer_app_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/installer-app/api/v1/",
+            "dataDome": true
+        },
+        "internal_api_gateway_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com",
+            "dataDome": true
+        },
+        "hcpo_auth_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/hcpo-token-exchange/",
+            "dataDome": true
+        },
+        "fraud_detection_api_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/fraud-risk/v1/",
+            "dataDome": true
+        },
+        "den_api_endpoint": {
+            "value": "https://account.chargepoint.com/account/",
+            "dataDome": true
+        },
+        "panda_websocket_endpoint": {
+            "value": "wss://homecharger-na.chargepoint.com:443/ws-prod/panda/v1",
+            "dataDome": true
+        },
+        "webservices_endpoint": {
+            "value": "https://webservices.chargepoint.com/backend.php/",
+            "dataDome": true
+        },
+        "portal_domain_endpoint": {
+            "value": "https://na.chargepoint.com/",
+            "dataDome": true
+        },
+        "driver_bff_endpoint": {
+            "value": "https://internal-api-us.chargepoint.com/driver-bff/",
+            "dataDome": true
+        },
+        "chatbot_gcp_ccaas_endpoint": {
+            "value": "https://cp-ccai-prod-mzq5aoy.uw1.ccaiplatform.com/api/v2?comId=17685589681431550be43b09032f819b",
+            "dataDome": true
+        }
+    },
+    "homeChargerConfig": {
+        "wifiTxPower": 30,
+        "installVideoUrl": "https://youtu.be/BSH8mEgrX6k",
+        "requestChargerUrl": "https://na.chargepoint.com/webview/get-home-charger",
+        "branding": {
+            "localizedProductName": "ChargePoint Home",
+            "localizedMarketingMessage": "Introducing our new smart and networked Level 2 EV charger.",
+            "productImageUrl": "https://mc.chargepoint.com/images/home/NA/ic_panda_photo.png",
+            "productWebPageUrl": "https://www.chargepoint.com/app/drivers/home/",
+            "installVideoUrl": "https://youtu.be/BSH8mEgrX6k",
+            "sku": "CPH25"
+        },
+        "activationURL": {
+            "path": "/ws-prod/panda/v1",
+            "port": 443,
+            "subdomain": "homecharger-na"
+        },
+        "powerSources": [
+            {
+                "type": "PLUG",
+                "amps": 0
+            },
+            {
+                "type": "HARD_WIRED",
+                "amps": 20
+            },
+            {
+                "type": "HARD_WIRED",
+                "amps": 40
+            }
+        ]
+    },
+    "regionalHomeChargers": [
+        {
+            "modelFamily": "CPH25",
+            "models": [
+                "CPH25-P",
+                "CPH12",
+                "CPH12-P",
+                "CPH25"
+            ]
+        },
+        {
+            "modelFamily": "CPH50",
+            "models": [
+                "CPH50-NEMA6-50-L23",
+                "CPH50-NEMA1450-L23-K-NACS",
+                "CPH50-NEMA14-50-L23-NACS",
+                "CPH50-NEMA650-L23-K",
+                "CPH50-HARDWIRE-L23-K",
+                "CPH50-NEMA6-50-L23-NACS",
+                "CPH50-HARDWIRE-L23-NACS",
+                "CPH50-HARDWIRE-L23-K-NACS",
+                "CPH50-NEMA1450-L23-K",
+                "CPH50-NEMA6-50-L23-15118",
+                "CPH50-NEMA14-50-L23",
+                "CPH50-NEMA650-L23-K-NACS",
+                "CPH50-HARDWIRE-L23"
+            ]
+        }
+    ],
+    "currency": {
+        "code": "USD",
+        "name": "U.S. Dollars",
+        "cardCost": 8.0,
+        "symbol": "$",
+        "initialDeposit": 10.0,
+        "replenishmentThreshold": 5.0,
+        "merchantId": null,
+        "cmid": "cou226345290",
+        "maxDecimalPlaces": 4,
+        "sessionPreAuthAmount": 50,
+        "preAuthAmountForRemoteStart": 25.0,
+        "minimumSignupAmount": 10.0,
+        "walletPaymentParamsId": null,
+        "ellipticCurvePoint": "",
+        "publicKey": ""
+    },
+    "supportedCurrencies": [
+        {
+            "code": "AUD",
+            "name": "Australian Dollars",
+            "cardCost": 12.0,
+            "symbol": "$",
+            "initialDeposit": 25.0,
+            "replenishmentThreshold": 10.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 50,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "BGN",
+            "name": "Bulgarian Lev",
+            "cardCost": 14.36,
+            "symbol": "BGN",
+            "initialDeposit": 18.0,
+            "replenishmentThreshold": 9.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 80,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "CAD",
+            "name": "Canadian Dollars",
+            "cardCost": 10.0,
+            "symbol": "$",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 5.0,
+            "merchantId": null,
+            "cmid": "wfgchargepointcanada",
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 50,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "CHF",
+            "name": "Swiss Franc",
+            "cardCost": 7.0,
+            "symbol": "CHF",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 10.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 40,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "CZK",
+            "name": "Czech koruna",
+            "cardCost": 185.0,
+            "symbol": "K?",
+            "initialDeposit": 235.0,
+            "replenishmentThreshold": 120.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 970,
+            "preAuthAmountForRemoteStart": 500.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "DKK",
+            "name": "Danish krone",
+            "cardCost": 50.0,
+            "symbol": "kr",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 10.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 300,
+            "preAuthAmountForRemoteStart": 400.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "EUR",
+            "name": "Euros",
+            "cardCost": 7.0,
+            "symbol": "€",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 5.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 40,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "GBP",
+            "name": "British Pound",
+            "cardCost": 6.0,
+            "symbol": "£",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 5.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 100,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "HRK",
+            "name": "Croatian Kuna",
+            "cardCost": 56.17,
+            "symbol": "kn",
+            "initialDeposit": 70.2,
+            "replenishmentThreshold": 35.1,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 300,
+            "preAuthAmountForRemoteStart": 100.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "HUF",
+            "name": "Hungarian Forint",
+            "cardCost": 2800.0,
+            "symbol": "Ft",
+            "initialDeposit": 3500.0,
+            "replenishmentThreshold": 1750.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 15110,
+            "preAuthAmountForRemoteStart": 3500.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "ILS",
+            "name": "Israeli new shekel",
+            "cardCost": 30.0,
+            "symbol": "?",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 10.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 60,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "MXN",
+            "name": "Mexican Pesos",
+            "cardCost": 155.0,
+            "symbol": "$",
+            "initialDeposit": 200.0,
+            "replenishmentThreshold": 100.0,
+            "merchantId": null,
+            "cmid": "wfgchargepointpeso",
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 50,
+            "preAuthAmountForRemoteStart": 200.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "NOK",
+            "name": "Norwegian krone",
+            "cardCost": 70.0,
+            "symbol": "kr",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 10.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 450,
+            "preAuthAmountForRemoteStart": 200.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "PLN",
+            "name": "Polish zloty",
+            "cardCost": 35.0,
+            "symbol": "z?",
+            "initialDeposit": 45.0,
+            "replenishmentThreshold": 25.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 170,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "RON",
+            "name": "Romanian Leu",
+            "cardCost": 36.57,
+            "symbol": "RON",
+            "initialDeposit": 45.7,
+            "replenishmentThreshold": 23.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 200,
+            "preAuthAmountForRemoteStart": 50.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "SEK",
+            "name": "Swedish krona",
+            "cardCost": 70.0,
+            "symbol": "kr",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 10.0,
+            "merchantId": null,
+            "cmid": null,
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 420,
+            "preAuthAmountForRemoteStart": 100.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        },
+        {
+            "code": "USD",
+            "name": "U.S. Dollars",
+            "cardCost": 8.0,
+            "symbol": "$",
+            "initialDeposit": 10.0,
+            "replenishmentThreshold": 5.0,
+            "merchantId": null,
+            "cmid": "cou226345290",
+            "maxDecimalPlaces": 4,
+            "sessionPreAuthAmount": 50,
+            "preAuthAmountForRemoteStart": 25.0,
+            "minimumSignupAmount": 10.0,
+            "walletPaymentParamsId": null,
+            "ellipticCurvePoint": "",
+            "publicKey": ""
+        }
+    ],
+    "defaultCountry": {
+        "id": 233,
+        "name": "United States",
+        "originalName": "United States",
+        "code": "US",
+        "callingCode": 1,
+        "zoomBounds": {
+            "ne_lon": "-56.222767",
+            "sw_lat": "11.463275",
+            "ne_lat": "72.912376",
+            "sw_lon": "-165.993456"
+        },
+        "phoneFormat": "XXX XXX XXXX",
+        "signupPaymentOptional": true,
+        "signupPromptsRFID": false,
+        "signupPromptsTTC": true,
+        "trialDeviceId": 1806521,
+        "requiresFullBillingAddress": false
+    },
+    "supportedCountries": [
+        {
+            "id": 16,
+            "name": "Austria",
+            "originalName": "Austria",
+            "code": "AT",
+            "callingCode": 43,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXXX XXXXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 6468925,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 23,
+            "name": "Belgium",
+            "originalName": "Belgium",
+            "code": "BE",
+            "callingCode": 32,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXXX XX XX XX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 40,
+            "name": "Canada",
+            "originalName": "Canada",
+            "code": "CA",
+            "callingCode": 1,
+            "zoomBounds": {
+                "ne_lon": "-56.222767",
+                "sw_lat": "41.65131",
+                "ne_lat": "72.912376",
+                "sw_lon": "-141.00691"
+            },
+            "phoneFormat": "XXX XXX XXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": false,
+            "signupPromptsTTC": true,
+            "trialDeviceId": 337041,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 59,
+            "name": "Czech Republic",
+            "originalName": "Czech Republic",
+            "code": "CZ",
+            "callingCode": 420,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXX XXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": false,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 60,
+            "name": "Denmark",
+            "originalName": "Denmark",
+            "code": "DK",
+            "callingCode": 45,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XX XX XX XX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 75,
+            "name": "Finland",
+            "originalName": "Finland",
+            "code": "FI",
+            "callingCode": 358,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXXXXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 76,
+            "name": "France",
+            "originalName": "France",
+            "code": "FR",
+            "callingCode": 33,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XX XX XX XX XX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 6468925,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 83,
+            "name": "Germany",
+            "originalName": "Germany",
+            "code": "DE",
+            "callingCode": 49,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXXXX XXXXXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 6480345,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 107,
+            "name": "Ireland",
+            "originalName": "Ireland",
+            "code": "IE",
+            "callingCode": 353,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXX XXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 6493335,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 110,
+            "name": "Italy",
+            "originalName": "Italy",
+            "code": "IT",
+            "callingCode": 39,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXX XXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 130,
+            "name": "Luxembourg",
+            "originalName": "Luxembourg",
+            "code": "LU",
+            "callingCode": 352,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXX XXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 144,
+            "name": "Mexico",
+            "originalName": "Mexico",
+            "code": "MX",
+            "callingCode": 52,
+            "zoomBounds": {
+                "ne_lon": "-56.222767",
+                "sw_lat": "11.463275",
+                "ne_lat": "72.912376",
+                "sw_lon": "-165.993456"
+            },
+            "phoneFormat": "XXX XXX XXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": false,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 157,
+            "name": "Netherlands",
+            "originalName": "Netherlands",
+            "code": "NL",
+            "callingCode": 31,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XX XXXXXXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 6499475,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 167,
+            "name": "Norway",
+            "originalName": "Norway",
+            "code": "NO",
+            "callingCode": 47,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XX XXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 178,
+            "name": "Poland",
+            "originalName": "Poland",
+            "code": "PL",
+            "callingCode": 48,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XX XXX XX XX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 179,
+            "name": "Portugal",
+            "originalName": "Portugal",
+            "code": "PT",
+            "callingCode": 351,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXX XXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 206,
+            "name": "Spain",
+            "originalName": "Spain",
+            "code": "ES",
+            "callingCode": 34,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XX XX XX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 6456125,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 212,
+            "name": "Sweden",
+            "originalName": "Sweden",
+            "code": "SE",
+            "callingCode": 46,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXX XX XX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 213,
+            "name": "Switzerland",
+            "originalName": "Switzerland",
+            "code": "CH",
+            "callingCode": 41,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXX XXX XX XX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 2776185,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 232,
+            "name": "United Kingdom",
+            "originalName": "United Kingdom",
+            "code": "GB",
+            "callingCode": 44,
+            "zoomBounds": {
+                "ne_lon": "50.738581",
+                "sw_lat": "12.066125",
+                "ne_lat": "71.685608",
+                "sw_lon": "-28.556870"
+            },
+            "phoneFormat": "XXXXX XXXXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": true,
+            "signupPromptsTTC": false,
+            "trialDeviceId": 2779605,
+            "requiresFullBillingAddress": false
+        },
+        {
+            "id": 233,
+            "name": "United States",
+            "originalName": "United States",
+            "code": "US",
+            "callingCode": 1,
+            "zoomBounds": {
+                "ne_lon": "-56.222767",
+                "sw_lat": "11.463275",
+                "ne_lat": "72.912376",
+                "sw_lon": "-165.993456"
+            },
+            "phoneFormat": "XXX XXX XXXX",
+            "signupPaymentOptional": true,
+            "signupPromptsRFID": false,
+            "signupPromptsTTC": true,
+            "trialDeviceId": 1806521,
+            "requiresFullBillingAddress": false
+        }
+    ],
+    "analytics": {
+        "mixpanel": {
+            "tokenAlias": "prod.us.mixpanel",
+            "piiAllowed": true,
+            "enabled": true
+        },
+        "crashlytics": {
+            "piiAllowed": true,
+            "enabled": true
+        },
+        "googleAnalytics": {
+            "piiAllowed": true,
+            "enabled": true
+        },
+        "answers": {
+            "piiAllowed": true,
+            "enabled": false
+        },
+        "firebase": {
+            "piiAllowed": true,
+            "enabled": true
+        },
+        "branch": {
+            "piiAllowed": true,
+            "enabled": true
+        }
+    },
+    "localizedResources": {
+        "homeOperation": {
+            "uri": "https://www.chargepoint.com/app/products/home/general/"
+        },
+        "homeLearnMore": {
+            "uri": "https://www.chargepoint.com/app/drivers/home/"
+        },
+        "contactUs": {
+            "uri": "https://www.chargepoint.com/support"
+        },
+        "sendUsFeedback": {
+            "uri": "https://www.chargepoint.com/support"
+        },
+        "privacyPolicy": {
+            "uri": "https://na.chargepoint.com/privacy_policy_mobile?instance=NA-US&country_id=233&locale=en"
+        },
+        "publicChargingFAQs": {
+            "uri": "https://www.chargepoint.com/drivers/support"
+        },
+        "termsOfServicesAnonymous": {
+            "uri": "https://na.chargepoint.com/nonstandard-driver-terms?instance=NA-US&country_id=233&locale=en"
+        },
+        "reportAProblem": {
+            "uri": ""
+        },
+        "termsAndConditions": {
+            "uri": "https://na.chargepoint.com/standard-driver-terms?instance=NA-US&country_id=233&locale=en"
+        },
+        "serviceFeePricingFAQs": {
+            "uri": "https://www.chargepoint.com/drivers/support/faqs/what-are-pricing-policies-and-fees-i-should-be-aware"
+        },
+        "homeTroubleshooting": {
+            "uri": "https://www.chargepoint.com/app/products/home/troubleshooting"
+        },
+        "homeBuyingGuide": {
+            "uri": "https://www.chargepoint.com/app/drivers/home/"
+        },
+        "serviceFeeLearnMore": {
+            "uri": "https://www.chargepoint.com/service-fee"
+        }
+    },
+    "taxInfo": {
+        "supported_countries": [
+            "MX"
+        ]
+    },
+    "filters": {
+        "powerLevelTypes": [
+            {
+                "name": "connector_l1",
+                "displayName": "AC - Wall Outlet",
+                "externalPortId": [
+                    7,
+                    9
+                ],
+                "type": "AC"
+            },
+            {
+                "name": "connector_l2",
+                "displayName": "AC - J1772",
+                "externalPortId": [
+                    1,
+                    91
+                ],
+                "type": "AC"
+            },
+            {
+                "name": "connector_l2_nema_1450",
+                "displayName": "AC - NEMA 14-50",
+                "externalPortId": [
+                    13
+                ],
+                "type": "AC"
+            },
+            {
+                "name": "connector_l2_tesla",
+                "displayName": "AC - NACS (Tesla)",
+                "externalPortId": [
+                    19
+                ],
+                "type": "AC"
+            },
+            {
+                "name": "connector_chademo",
+                "displayName": "DC Fast - CHAdeMO",
+                "externalPortId": [
+                    3,
+                    21
+                ],
+                "type": "DC"
+            },
+            {
+                "name": "connector_combo",
+                "displayName": "DC Fast - Combo",
+                "externalPortId": [
+                    15,
+                    11,
+                    31,
+                    41
+                ],
+                "type": "DC"
+            },
+            {
+                "name": "connector_tesla",
+                "displayName": "DC Fast - NACS (Tesla)",
+                "externalPortId": [
+                    51
+                ],
+                "type": "DC"
+            }
+        ],
+        "networks": [
+            {
+                "name": "network_bchydro",
+                "displayName": "BC Hydro"
+            },
+            {
+                "name": "network_blink",
+                "displayName": "Blink"
+            },
+            {
+                "name": "network_chargepoint",
+                "displayName": "ChargePoint"
+            },
+            {
+                "name": "network_circuitelectric",
+                "displayName": "Circuit électrique"
+            },
+            {
+                "name": "network_evconnect",
+                "displayName": "EV Connect"
+            },
+            {
+                "name": "network_evgateway",
+                "displayName": "EV Gateway"
+            },
+            {
+                "name": "network_evgo",
+                "displayName": "EVgo"
+            },
+            {
+                "name": "network_flo",
+                "displayName": "FLO"
+            },
+            {
+                "name": "network_greenlots",
+                "displayName": "Shell Recharge"
+            },
+            {
+                "name": "network_ionna",
+                "displayName": "Ionna"
+            },
+            {
+                "name": "network_mercedes",
+                "displayName": "Mercedes-Benz Charging Network"
+            }
+        ]
+    },
+    "region": "NA-US",
+    "instance": "NA-US",
+    "userAgreements": [
+        {
+            "name": "aiChatbotTerms.us",
+            "gatedFunctionality": [
+                "chatbot"
+            ],
+            "localizedName": "AI Terms of Use",
+            "optInByDefault": false,
+            "promptOnLaunch": false,
+            "promptOnLogin": false,
+            "version": 1,
+            "webUrl": "https://driver.chargepoint.com/ai-terms-of-use?instance=NA-US&country_id=233&locale=en",
+            "id": 3321,
+            "url": "https://na.chargepoint.com/ai-terms-of-use?instance=NA-US&country_id=233&locale=en"
+        }
+    ],
+    "responseTTL": 43200000,
+    "webViewUrls": {
+        "chargingReceiptUrl": "https://driver.chargepoint.com/webview/receipt/{sessionId}"
+    },
+    "stationStatesLastUpdate": 1715755545,
+    "stationStatesUrl": "https://na.chargepoint.com/UI/images/pills/states/en-US/states.json",
+    "adyenClientKey": "live_LWVMPMY2UZAJLMY4QVZCXGQYUMEXVXKE",
+    "adyenApplePayMerchantId": "merchant.com.coulomb.ChargePoint.adyen.US.PROD"
+}

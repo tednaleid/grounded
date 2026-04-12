@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": "13836601",
+      "label": "HOME FLEX",
+      "protocolIdentifier": "CP_MQTT"
+    }
+  ],
+  "pagination": {
+    "nextCursor": ""
+  }
+}
