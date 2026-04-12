@@ -46,8 +46,9 @@ architecture, Justfile is the command surface).
 `grounded` is built hexagonally:
 
 - **`Sources/Core/`** — pure Foundation domain: `ChargerState`, classifier,
-  `ChargerMonitor` state machine, `MonitoringConfig`. Contains no UI or
-  system framework imports. Enforced in CI by a grep step.
+  `ChargerMonitor` orchestrator, `MonitoringTick` state machine,
+  `MonitoringConfig`. Contains no UI or system framework imports. Enforced
+  in CI by a grep step.
 - **`Sources/Core/Ports/`** — protocols the Core needs to reach the outside
   world: `ChargerStatusSource`, `CredentialStore`, `NotificationSink`,
   `BrowserAuth`, `Clock`, `StateObserver`.
@@ -56,8 +57,8 @@ architecture, Justfile is the command surface).
   `Notifications/` (UserNotifications), `WebKit/` (WebKit login harvest),
   `System/` (wall clock), `AppKit/` (NSStatusItem), `Debug/` (inspect HTTP
   server, DEBUG only).
-- **`Sources/App/`** — composition root: `@main`, `AppDelegate`, wires
-  adapters into the Core.
+- **`Sources/App/`** — composition root: `@main`, `AppDelegate`,
+  `LoginFlow`, wires adapters into the Core.
 
 ## Design docs
 

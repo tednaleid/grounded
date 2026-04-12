@@ -27,7 +27,7 @@ codebase.
 
 ```
 Sources/
-├── App/        -- composition root (@main, AppDelegate, ChargerMonitor)
+├── App/        -- composition root (@main, AppDelegate, LoginFlow)
 ├── Core/       -- pure Foundation. No framework imports.
 │   └── Ports/  -- protocols the Core needs (still Foundation-only)
 └── Adapters/   -- implementations of Ports that touch the outside world
