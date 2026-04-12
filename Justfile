@@ -266,6 +266,10 @@ retag version:
     git tag -a "$tag" -F "$notes_file"
     git push && git push --tags
 
+# regenerate the README state icon PNGs in docs/images/
+readme-icons:
+    swift scripts/generate-readme-icons.swift
+
 # clean all build artifacts
 clean:
     rm -rf {{symroot}} grounded.xcodeproj DerivedData

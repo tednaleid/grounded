@@ -1,9 +1,24 @@
 # grounded
 
-A signed, notarized macOS menubar app that monitors a home ChargePoint EV
-charger and fires persistent macOS notifications on state changes — so you
-find out *during the night* when an overnight charge failed, not in the
-morning when your car is still empty.
+A macOS menubar app that monitors a home ChargePoint EV charger and shows
+macOS notifications when the charger state changes. These changes can be
+made persistent, so you find out right *during the night* when an overnight 
+charge failed, not in the morning when your car is still empty.
+
+Polls every 10 minutes for charging status and uses the same ChargePoint API that the iOS app uses.
+
+## Menubar states
+
+| Icon | State | Meaning |
+|:----:|-------|---------|
+| <img src="docs/images/state-signed-out.png" width="24" alt="gray"> | **Signed out** | No ChargePoint credentials. Click the icon to sign in. |
+| <img src="docs/images/state-idle.png" width="24" alt="green"> | **Idle** | Charger online, car not plugged in. |
+| <img src="docs/images/state-plugged-in.png" width="24" alt="blue"> | **Plugged in** | Car connected but not actively drawing power. |
+| <img src="docs/images/state-charging.png" width="24" alt="yellow"> | **Charging** | Active charging session in progress. |
+| <img src="docs/images/state-error.png" width="24" alt="red"> | **Error** | Charger offline or 3+ consecutive poll failures. |
+
+Notifications fire on every state transition (except the initial baseline
+poll) so you know immediately when charging starts, stops, or fails.
 
 ## Install
 
