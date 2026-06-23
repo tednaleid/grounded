@@ -135,7 +135,7 @@ jobs:
             desc "macOS menubar app that monitors a home ChargePoint charger"
             homepage "https://github.com/tednaleid/grounded"
 
-            depends_on macos: ">= :sonoma"
+            depends_on macos: :sonoma
 
             app "Grounded.app"
 
